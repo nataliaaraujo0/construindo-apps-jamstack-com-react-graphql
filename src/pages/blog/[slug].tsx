@@ -1,8 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 
+import { PostDocument, usePostQuery } from '~/generated/graphql';
 import { client, ssrCache } from '~/lib/urlql';
-
-import { PostDocument, usePostQuery } from '../../generated/graphql';
 
 export default function Post({ slug }) {
   const [
