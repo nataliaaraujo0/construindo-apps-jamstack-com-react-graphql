@@ -5685,6 +5685,39 @@ export type PageQuery = {
   } | null;
 };
 
+export type PostQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+export type PostQuery = {
+  __typename?: 'Query';
+  post?: {
+    __typename?: 'Post';
+    title: string;
+    content: { __typename?: 'RichText'; html: string };
+    coverImage?: { __typename?: 'Asset'; url: string } | null;
+  } | null;
+};
+
+export type PostsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PostsQuery = {
+  __typename?: 'Query';
+  posts: Array<{
+    __typename?: 'Post';
+    title: string;
+    slug: string;
+    excerpt?: string | null;
+    publishedAt?: any | null;
+    coverImage?: { __typename?: 'Asset'; url: string } | null;
+    author?: {
+      __typename?: 'Author';
+      name: string;
+      picture?: { __typename?: 'Asset'; url: string } | null;
+    } | null;
+  }>;
+};
+
 export const PageDocument = gql`
   query Page($slug: String!) {
     page(where: { slug: $slug }) {
@@ -5702,4 +5735,56 @@ export function usePageQuery(
   options: Omit<Urql.UseQueryArgs<PageQueryVariables>, 'query'>
 ) {
   return Urql.useQuery<PageQuery>({ query: PageDocument, ...options });
+}
+export const PostDocument = gql`
+  query Post($slug: String!) {
+    post(where: { slug: $slug }) {
+      title
+      content {
+        html
+      }
+      coverImage {
+        url(
+          transformation: {
+            image: { resize: { width: 1400, height: 600, fit: crop } }
+          }
+        )
+      }
+    }
+  }
+`;
+
+export function usePostQuery(
+  options: Omit<Urql.UseQueryArgs<PostQueryVariables>, 'query'>
+) {
+  return Urql.useQuery<PostQuery>({ query: PostDocument, ...options });
+}
+export const PostsDocument = gql`
+  query Posts {
+    posts(orderBy: publishedAt_DESC) {
+      title
+      slug
+      excerpt
+      publishedAt
+      coverImage {
+        url(transformation: { image: { resize: { width: 400 } } })
+      }
+      author {
+        name
+        picture {
+          url(
+            transformation: {
+              image: { resize: { height: 40, width: 40, fit: crop } }
+            }
+          )
+        }
+      }
+    }
+  }
+`;
+
+export function usePostsQuery(
+  options?: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>
+) {
+  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
 }

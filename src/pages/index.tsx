@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 
 import { Features } from '~/components/Features';
 import { Hero } from '~/components/Hero';
@@ -22,7 +22,7 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   await client.query(PageDocument, { slug: 'home' }).toPromise();
 
   return {
