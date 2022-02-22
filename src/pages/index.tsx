@@ -1,4 +1,7 @@
-import { usePageQuery } from '~/generated/graphql';
+import { GetServerSideProps } from 'next';
+
+import { PageDocument, usePageQuery } from '~/generated/graphql';
+import { client, ssrCache } from '~/lib/urlql';
 
 export default function Home() {
   const [{ data }] = usePageQuery({
@@ -14,3 +17,12 @@ export default function Home() {
     </>
   );
 }
+export const getServerSideProps: GetServerSideProps = async () => {
+  await client.query(PageDocument, { slug: 'home' }).toPromise();
+
+  return {
+    props: {
+      urqlState: ssrCache.extractData(),
+    },
+  };
+};

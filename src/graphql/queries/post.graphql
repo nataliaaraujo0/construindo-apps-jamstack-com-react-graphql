@@ -1,0 +1,15 @@
+query Post($slog: Slog!) {
+  post(where: { slug: Slug }) {
+    title
+    content {
+      html
+    }
+    converImage {
+      url(
+        transformation: {
+          image: { resize: { width: 1400, height: 600, fit: crop } }
+        }
+      )
+    }
+  }
+}
