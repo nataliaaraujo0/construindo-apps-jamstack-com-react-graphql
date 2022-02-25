@@ -32,3 +32,6 @@ yarn
 # Inicialize vite
 yarn dev
 ```
+  [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=nataliaaraujo0&repo=construindo-apps-jamstack-com-react-graphql
+)]
+  
