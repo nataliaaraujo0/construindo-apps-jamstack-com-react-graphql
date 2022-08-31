@@ -18,7 +18,7 @@ https://www.youtube.com/watch?v=f_mFdccIm3U&t=3139s
 
 ```bash
 # Clone o repositório
- $ git clone https://github.com/nataliaaraujo0/todo-k-on.git
+ $ git clone https://github.com/nataliaaraujo0/construindo-apps-jamstack-com-react-graphql.git
 ```
 
 ```bash
